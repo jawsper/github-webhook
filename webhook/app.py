@@ -1,3 +1,5 @@
+from typing import Union
+
 from fastapi import FastAPI, Header, Request
 from fastapi.responses import JSONResponse
 
@@ -10,7 +12,7 @@ app = FastAPI()
 
 @app.post("/")
 async def hello_world(
-    body: PingBody | PackageBody,
+    body: Union[PingBody, PackageBody],
     request: Request,
     x_github_event: str = Header(),
 ):
