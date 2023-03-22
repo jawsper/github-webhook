@@ -1,3 +1,5 @@
+import logging
+from subprocess import check_output, SubprocessError
 from typing import Union
 
 from fastapi import FastAPI, Header, Request
@@ -7,8 +9,9 @@ from .config import config
 from .models import PingBody, PackageBody
 from .utils import validate_signature
 
-app = FastAPI()
+log = logging.getLogger(__name__)
 
+app = FastAPI()
 
 @app.post("/")
 async def hello_world(
@@ -29,9 +32,12 @@ async def hello_world(
             and package_body.package.package_version.container_metadata.tag.name
             == "latest"
         ):
-            # TODO: actually run command
-            return config.command
-            # return check_output(config.command)
+            try:
+                return check_output(config.command)
+            except SubprocessError as e:
+                log.exception("Error calling process")
+                return "Failed to execute command"
+
         else:
             return "Nothing to do for this version"
     return "Nothing to do"
