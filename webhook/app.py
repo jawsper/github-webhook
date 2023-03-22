@@ -1,5 +1,5 @@
 import logging
-from subprocess import check_output, SubprocessError
+from subprocess import Popen, SubprocessError
 from typing import Union
 
 from fastapi import FastAPI, Header, Request
@@ -33,7 +33,8 @@ async def hello_world(
             == "latest"
         ):
             try:
-                return check_output(config.command)
+                process = Popen(config.command)
+                return "Process started"
             except SubprocessError as e:
                 log.exception("Error calling process")
                 return "Failed to execute command"
