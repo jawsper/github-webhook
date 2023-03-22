@@ -1,0 +1,4 @@
+click
+fastapi
+pydantic
+uvicorn
