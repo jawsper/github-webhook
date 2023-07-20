@@ -1,4 +1,5 @@
 import logging
+import shlex
 from subprocess import Popen, SubprocessError
 from typing import Union
 
@@ -33,7 +34,7 @@ async def hello_world(
             == "latest"
         ):
             try:
-                process = Popen(config.command)
+                process = Popen(shlex.split(config.command))
                 return "Process started"
             except SubprocessError as e:
                 log.exception("Error calling process")
