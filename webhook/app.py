@@ -29,7 +29,7 @@ async def hello_world(
             package_body.package.package_version
             and package_body.package.package_version.container_metadata
             and package_body.package.package_version.container_metadata.tag.name
-            == "latest"
+            == config.match_tag
         ):
             try:
                 process = Popen(shlex.split(config.command))
