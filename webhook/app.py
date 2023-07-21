@@ -3,26 +3,24 @@ import shlex
 from subprocess import Popen, SubprocessError
 from typing import Union
 
-from fastapi import FastAPI, Header, Request
-from fastapi.responses import JSONResponse
+from fastapi import FastAPI, Header
 
 from .config import config
+from .middleware import ValidateSignatureMiddleware
 from .models import PingBody, PackageBody
-from .utils import validate_signature
 
 log = logging.getLogger(__name__)
 
 app = FastAPI()
 
+app.add_middleware(ValidateSignatureMiddleware)
+
+
 @app.post("/")
 async def hello_world(
     body: Union[PingBody, PackageBody],
-    request: Request,
     x_github_event: str = Header(),
 ):
-    if not await validate_signature(request):
-        return JSONResponse(content={"message": "Invalid signature"}, status_code=401)
-
     if x_github_event == "package":
         assert type(body) == PackageBody, "Invalid body for event"
         package_body: PackageBody = body  # type: ignore
