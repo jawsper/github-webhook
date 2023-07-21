@@ -1,9 +1,9 @@
 import logging
 import shlex
 from subprocess import Popen, SubprocessError
-from typing import Union
+from typing import Annotated
 
-from fastapi import FastAPI, Header
+from fastapi import FastAPI, Body, Header
 
 from .config import config
 from .middleware import ValidateSignatureMiddleware
@@ -18,7 +18,7 @@ app.add_middleware(ValidateSignatureMiddleware)
 
 @app.post("/")
 async def hello_world(
-    body: Union[PingBody, PackageBody],
+    body: Annotated[PingBody | PackageBody, Body()],
     x_github_event: str = Header(),
 ):
     if x_github_event == "package":
