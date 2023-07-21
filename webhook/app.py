@@ -1,7 +1,7 @@
 import logging
 import shlex
 from subprocess import Popen, SubprocessError
-from typing import Annotated
+from typing import Annotated, cast
 
 from fastapi import FastAPI, Body, Header
 
@@ -23,7 +23,7 @@ async def hello_world(
 ):
     if x_github_event == "package":
         assert type(body) == PackageBody, "Invalid body for event"
-        package_body: PackageBody = body  # type: ignore
+        package_body = cast(PackageBody, body)
 
         if (
             package_body.package.package_version
