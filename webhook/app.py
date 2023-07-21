@@ -33,6 +33,7 @@ async def hello_world(
         ):
             try:
                 process = Popen(shlex.split(config.command))
+                print(f"Started command '{config.command}'")
                 return "Process started"
             except SubprocessError as e:
                 log.exception("Error calling process")
