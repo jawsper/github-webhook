@@ -4,27 +4,27 @@ from pydantic import BaseModel
 
 
 class OwnerModel(BaseModel):
-    avatar_url: Optional[str]
-    deleted: Optional[bool]
-    email: Optional[str]
-    events_url: Optional[str]
-    followers_url: Optional[str]
-    following_url: Optional[str]
-    gists_url: Optional[str]
-    gravatar_id: Optional[str]
-    html_url: Optional[str]
+    avatar_url: Optional[str] = None
+    deleted: Optional[bool] = None
+    email: Optional[str] = None
+    events_url: Optional[str] = None
+    followers_url: Optional[str] = None
+    following_url: Optional[str] = None
+    gists_url: Optional[str] = None
+    gravatar_id: Optional[str] = None
+    html_url: Optional[str] = None
     id: int
     login: str
-    name: Optional[str]
-    node_id: Optional[str]
-    organizations_url: Optional[str]
-    received_events_url: Optional[str]
-    repos_url: Optional[str]
-    site_admin: Optional[bool]
-    starred_url: Optional[str]
-    subscriptions_url: Optional[str]
-    type: Optional[Literal["Bot", "User", "Organization"]]
-    url: Optional[str]
+    name: Optional[str] = None
+    node_id: Optional[str] = None
+    organizations_url: Optional[str] = None
+    received_events_url: Optional[str] = None
+    repos_url: Optional[str] = None
+    site_admin: Optional[bool] = None
+    starred_url: Optional[str] = None
+    subscriptions_url: Optional[str] = None
+    type: Optional[Literal["Bot", "User", "Organization"]] = None
+    url: Optional[str] = None
 
 
 class TagModel(BaseModel):
@@ -37,11 +37,11 @@ class ContainerMetadataModel(BaseModel):
 
 
 class PackageVersionModel(BaseModel):
-    author: Optional[OwnerModel]
-    body: Optional[Union[str, dict]]
-    body_html: Optional[str]
-    container_metadata: Optional[ContainerMetadataModel]
-    created_at: Optional[str]
+    author: Optional[OwnerModel] = None
+    body: Optional[Union[str, dict]] = None
+    body_html: Optional[str] = None
+    container_metadata: Optional[ContainerMetadataModel] = None
+    created_at: Optional[str] = None
     description: str
     html_url: str
     id: int
@@ -54,8 +54,8 @@ class PackageVersionModel(BaseModel):
 
 
 class PackageModel(BaseModel):
-    created_at: Optional[str]
-    description: Optional[str]
+    created_at: Optional[str] = None
+    description: Optional[str] = None
     ecosystem: str
     html_url: str
     id: int
@@ -63,9 +63,9 @@ class PackageModel(BaseModel):
     namespace: str
     owner: Optional[OwnerModel]
     package_type: str
-    package_version: Optional[PackageVersionModel]
-    registry: Optional[Any]
-    updated_at: Optional[str]
+    package_version: Optional[PackageVersionModel] = None
+    registry: Optional[Any] = None
+    updated_at: Optional[str] = None
 
 
 class RegistryModel(BaseModel):
@@ -84,10 +84,10 @@ class PingBody(BaseModel):
 
 class PackageBody(BaseModel):
     action: Literal["published", "updated"]
-    enterprise: Optional[Any]
-    installation: Optional[Any]
-    organization: Optional[Any]
+    enterprise: Optional[Any] = None
+    installation: Optional[Any] = None
+    organization: Optional[Any] = None
     package: PackageModel
-    repository: Optional[Any]
+    repository: Optional[Any] = None
     sender: OwnerModel
     # TODO: implement other types, though this app won't need them
